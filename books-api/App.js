@@ -65,7 +65,7 @@ app.patch("/books/:id", (req, res) => {
 
 // It will delete the book
 app.delete("/books/:id", (req, res) => {
-    const updatedBooks = books.map((book) => {
+    const updatedBooks = books.filter((book) => {
         if (parseInt(req.params.id) !== parseInt(book.id)) {
             return book;
         }
