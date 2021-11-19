@@ -29,8 +29,21 @@ const app = express();
 
 app.use(express.json());
 
+const requestedBy = (person) => {
+    return (req, res, next) => {
+        // Binding current response to original response
+        const originalSend = res.send.bind(res);
+        res.send = function (body) {
+            let obj = { api_requested_by: person };
+            body["name"] = obj;
+            return originalSend(body);
+        };
+        next();
+    };
+};
+
 // It will return all books
-app.get("/", (req, res) => {
+app.get("/", requestedBy("Aaditya"), (req, res) => {
     res.send({ books });
 });
 
@@ -41,7 +54,7 @@ app.post("/books", (req, res) => {
 });
 
 // This will return a specific book
-app.get("/books/:id", (req, res) => {
+app.get("/books/:id", requestedBy("Aaditya"), (req, res) => {
     const book = books.filter((book) => {
         if (parseInt(book.id) === parseInt(req.params.id)) {
             return book;
