@@ -1,0 +1,73 @@
+// Show Databases
+show dbs;
+
+use Users;
+db.createCollection("users");
+
+// Insert One at a time
+db.users.insert(
+	{"id":"1", "firstName":"Aditya", "lastName":"Neve"}
+);
+db.users.insert(
+	{"id":"2", "firstName":"Ronit", "lastName":"Neve"}
+);
+
+// To get all data in collection
+db.users.find().pretty()
+
+// Insert Many
+db.users.insertMany([
+	{"id":"3", "firstName":"ABC", "lastName":"XYZ"},
+	{"id":"4", "firstName":"DEF", "lastName":"XYZ"},
+	{"id":"5", "firstName":"GHI", "lastName":"XYZ"},
+	{"id":"6", "firstName":"JKL", "lastName":"XYZ"},
+	{"id":"7", "firstName":"MNO", "lastName":"XYZ"},
+	{"id":"8", "firstName":"PQR", "lastName":"XYZ"},
+	{"id":"9", "firstName":"STU", "lastName":"XYZ"},
+	{"id":"10", "firstName":"VWX", "lastName":"XYZ"},
+]);
+
+// Find
+db.users.find(
+	{"lastName":"XYZ"}
+);
+
+db.users.findOne(
+	{"lastName":"XYZ"}
+);
+
+
+// Update
+db.users.update(
+	{"id":"3"},
+	{
+		$set: {"lastName":"NEVE"}
+	}
+);
+
+// Update Many
+db.users.updateMany(
+	{"lastName":"XYZ"},
+	{
+		$set: {"lastName":"NEVE"}
+	}
+);
+
+// Remove One
+db.users.remove(
+	{"id":"10"}
+);
+
+// Remove Many - not working
+db.users.remove(
+	{ },3
+);
+
+// Delete One
+db.users.deleteOne({gender: "Female"})
+
+// Delete Many
+db.users.deleteMany({gender: "Female"})
+
+// Delete Database
+db.dropDatabase();
