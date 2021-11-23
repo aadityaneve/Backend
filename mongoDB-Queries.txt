@@ -74,6 +74,9 @@ db.dropDatabase();
 
 
 
+
+****** Operator's *******
+
 // Equality Operator
 db.users.find({email: {$eq: "aditya.neve@gmail.com"}}).pretty()
 
@@ -102,4 +105,25 @@ db.users.find({age: {$lt: 4}}, {firstName: 1, _id: 0}).pretty()
 * Get Only firstName & lastName, _id will come
 db.users.find({age: {$lt: 4}}, {firstName: 1, lastName: 1}).pretty()
 
+****** Operator's *******
 
+
+
+
+****** Logical Operator's *******
+
+// AND Operator
+db.users..find({$and: [{age: {$gt: 60}}, {gender: "male"}]}).pretty()
+
+// db.users..find({$and: [{age: {$gt: 60}}, {gender: "male"}]}, {$set: {middleName: "masai}}).pretty()
+
+// OR Operator
+db.users.find({$or: [{age: {$gt: 60}}, {gender: "male"}]}).pretty()
+
+// NOT Operator
+db.users.find({email: {$not: {$eq: "a@a.com}}})
+db.users.find({age: {$not: {$lt: 95}}})
+
+// NOR Operator if-> false & false then true
+
+****** Logical Operator's *******
