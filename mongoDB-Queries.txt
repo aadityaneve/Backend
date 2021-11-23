@@ -125,5 +125,8 @@ db.users.find({email: {$not: {$eq: "a@a.com}}})
 db.users.find({age: {$not: {$lt: 95}}})
 
 // NOR Operator if-> false & false then true
+db.users.find({$nor: [{firstName: "Aditya"}, {age: {$gt: 90}}]})
 
 ****** Logical Operator's *******
+
+
