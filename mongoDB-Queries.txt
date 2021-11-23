@@ -129,4 +129,30 @@ db.users.find({$nor: [{firstName: "Aditya"}, {age: {$gt: 90}}]})
 
 ****** Logical Operator's *******
 
+// IN Operator -> its like includes() in JS
+db.users.find({age: {$in: [ 2, 5, 10]}}).pretty()
 
+// Sort by name in Ascending order
+db.users.find({age: {$in: [2, 5, 10]}}).sort({firstName: 1}).pretty()
+
+// Sort by name in Descending order
+db.users.find({age: {$in: [2, 5, 10]}}).sort({firstName: -1}).pretty()
+
+// Sort By Age in Ascending order
+db.users.find({age: {$in: [2, 5, 10]}}).sort({age: 1}).pretty()
+
+// Sort by Age in Descending order
+db.users.find({age: {$in: [2, 5, 10]}}).sort({age: -1}).pretty()
+
+
+// Sort by Age in Descending order: Here firstName sorting will only happen if age is same
+db.users.find({age: {$in: [2, 5, 10]}}).sort({age: -1, firstName: -1}).pretty()
+
+// Entered name partially will give full text matched
+db.users.find({firstName: /Adi/}).pretty()
+
+// LIMIT 
+.limit(5)
+
+// SKIP
+.skip(0)
