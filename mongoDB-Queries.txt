@@ -71,3 +71,35 @@ db.users.deleteMany({gender: "Female"})
 
 // Delete Database
 db.dropDatabase();
+
+
+
+// Equality Operator
+db.users.find({email: {$eq: "aditya.neve@gmail.com"}}).pretty()
+
+// Not Equal Operator
+db.users.find({email: {$ne: "aditya.neve@gmail.com"}}).pretty()
+
+// Greater Than Operator
+db.users.find({age: {$gt: 90}}).pretty()
+
+// Greater Than Equal To
+db.users.find({age: {$gt: 90}}).pretty()
+
+// Less Than Operator
+db.users.find({age: {$lt: 4}}).pretty()
+
+// Less Than Equal To
+db.users.find({age: {$lte: 4}}).pretty()
+
+
+
+// Get Only Required data with conditional operator
+* 1: true, 0: false
+db.users.find({age: {$lt: 4}}, {firstName: 1}).pretty()
+* Make _id: false i.e 0, which will not return id
+db.users.find({age: {$lt: 4}}, {firstName: 1, _id: 0}).pretty()
+* Get Only firstName & lastName, _id will come
+db.users.find({age: {$lt: 4}}, {firstName: 1, lastName: 1}).pretty()
+
+
