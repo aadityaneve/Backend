@@ -65,20 +65,26 @@ const topicSchema = new mongoose.Schema(
 );
 const Topic = mongoose.model("topic", topicSchema);
 
-const evaluationSchema = new mongoose.Schema({
-    date_of_eval: { type: Date, required: true },
-    student_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "student",
-        required: true,
+const evaluationSchema = new mongoose.Schema(
+    {
+        date_of_eval: { type: Date, required: true },
+        student_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "student",
+            required: true,
+        },
+        topic_id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "topic",
+            required: true,
+        },
+        marks: { type: Number, required: false, default: 0 },
     },
-    topic_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "topic",
-        required: true,
-    },
-    marks: { type: Number, required: false, default: 0 },
-});
+    {
+        versionKey: false,
+        timestamps: true,
+    }
+);
 const Eval = mongoose.model("evaluation", evaluationSchema);
 
 app.post("/user", async (req, res) => {
@@ -117,7 +123,7 @@ app.post("/topic", async (req, res) => {
     }
 });
 
-app.post("/eval", async (req, res) => {
+app.post("/eval", async (req,res) => {
     try {
         const eval = await Eval.create(req.body);
         return res.status(201).send(eval);
@@ -128,19 +134,19 @@ app.post("/eval", async (req, res) => {
 
 app.get("/students/topic_id=:topic_id", async (req, res) => {
     try {
-        const eval = await Eval.find({ topic_id: req.params.topic_id})
-        .populate("student_id")
-        .populate(
-            {
-                path: "student_id",
-                populate: {
-                    path: "user_id",
+        const eval = await Eval.find({ topic_id:req.params.topic_id })
+            .populate("student_id")
+            .populate(
+                {
+                    path: "student_id",
+                    populate: {
+                        path: "user_id",
+                    }
                 }
-            }
-        )
-        .populate("topic_id")
-        .lean()
-        .exec();
+            )
+            .populate("topic_id")
+            .lean()
+            .exec()
         return res.status(201).send(eval);
     } catch (e) {
         return res.status(500).send({ message: e.message });
@@ -149,26 +155,24 @@ app.get("/students/topic_id=:topic_id", async (req, res) => {
 
 app.get("/students/max-marks", async (req, res) => {
     try {
-
         const highestMarks = await Eval.find()
-        .sort({marks: -1})
-        .limit(3)
-        .populate("student_id")
-        .populate(
-            {
+            .sort({ marks: -1 })
+            .limit(3)
+            .populate("student_id")
+            .populate({
                 path: "student_id",
                 populate: {
                     path: "user_id",
-                }
-            }
-        )
-        .lean()
-        .exec();
+                },
+            })
+            .populate("topic_id")
+            .lean()
+            .exec();
         return res.status(201).send(highestMarks);
-    }catch(e){
-        return res.status(500).send({ message: e.message})
+    } catch (e) {
+        return res.status(500).send({ message: e.message });
     }
-})
+});
 
 app.listen(3001, async () => {
     await connect();
