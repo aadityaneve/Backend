@@ -1,0 +1,23 @@
+db.getCollection("collection_name").find(       -> FROM Clause
+
+    {
+        "document_key": {                       -> WHERE clause
+            // if any condition
+            "$gt": your condition
+        },
+    },
+    {
+        "first_name": "$first_name",            -> SELECT clause
+        "last_name": "$last_name",
+        "_id": your id
+    }
+
+).sort(
+    {
+        "transaction":                          -> ORDER BY Clause
+        "last": 
+    }
+)
+
+
+
