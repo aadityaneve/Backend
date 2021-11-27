@@ -111,6 +111,7 @@ app.post("/book", async (req, res) => {
 });
 
 // correct
+// find books in a section
 app.get("/book/section_id=:section_id", async (req, res) => {
     try {
         const book = await Book.find({ section_id: req.params.section_id })
@@ -126,6 +127,7 @@ app.get("/book/section_id=:section_id", async (req, res) => {
 });
 
 // correct
+// find all books written by an author
 app.get("/book/author_id=:author_id", async (req, res) => {
     try {
         const book = await Book.find({ author_id: req.params.author_id })
@@ -141,6 +143,7 @@ app.get("/book/author_id=:author_id", async (req, res) => {
 });
 
 // correct
+// find books in a section that are not checked out
 app.get(
     "/book/author_id=:author_id/section_id=:section_id",
     async (req, res) => {
@@ -173,6 +176,7 @@ app.post("/user/:book_id", async (req, res) => {
 });
 
 // will return all checkout books
+// find books that are checked out
 app.get("/user/books", async (req, res) => {
     try {
         const books = await User.find({}, { book_id: 1 })
@@ -199,6 +203,7 @@ app.get("/user/books", async (req, res) => {
 });
 
 // get books by author_id and section_id
+// find books of 1 author inside a section
 app.get(
     "/books/author_id=:author_id/section_id=:section_id",
     async (req, res) => {
