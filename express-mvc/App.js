@@ -8,84 +8,11 @@ const connect = () => {
     return mongoose.connect("mongodb://127.0.0.1:27017/masai");
 };
 
-const userSchema = new mongoose.Schema(
-    {
-        first_name: { type: String, required: true },
-        last_name: { type: String, required: false },
-        gender: { type: String, required: false, default: "Male" },
-        dob: { type: Date, required: true },
-    },
-    {
-        versionKey: false,
-        timestamps: true,
-    }
-);
-const User = mongoose.model("user", userSchema);
-
-const studentSchema = new mongoose.Schema(
-    {
-        roll_id: { type: Number, required: true },
-        current_batch: { type: String, required: true },
-        user_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "user",
-            required: true,
-        },
-    },
-    {
-        versionKey: false,
-        timestamps: true,
-    }
-);
-const Student = mongoose.model("student", studentSchema);
-
-const instructorSchema = new mongoose.Schema(
-    {
-        instructor_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "user",
-            required: true,
-        },
-    },
-    {
-        versionKey: false,
-        timestamps: true,
-    }
-);
-const Instructor = mongoose.model("instructor", instructorSchema);
-
-const topicSchema = new mongoose.Schema(
-    {
-        topic_name: { type: String, required: true },
-    },
-    {
-        versionKey: false,
-        timestamps: true,
-    }
-);
-const Topic = mongoose.model("topic", topicSchema);
-
-const evaluationSchema = new mongoose.Schema(
-    {
-        date_of_eval: { type: Date, required: true },
-        student_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "student",
-            required: true,
-        },
-        topic_id: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "topic",
-            required: true,
-        },
-        marks: { type: Number, required: false, default: 0 },
-    },
-    {
-        versionKey: false,
-        timestamps: true,
-    }
-);
-const Eval = mongoose.model("evaluation", evaluationSchema);
+const User = require("./src/models/user.model");
+const Student = require("./src/models/student.model");
+const Instructor = require("./src/models/instructor.model");
+const Topic = require("./src/models/topic.model");
+const Eval = require("./src/models/evaluation.model");
 
 app.post("/user", async (req, res) => {
     try {
