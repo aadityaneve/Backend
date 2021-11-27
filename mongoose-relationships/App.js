@@ -212,6 +212,8 @@ app.get(
                 author_id: req.params.author_id,
                 section_id: req.params.section_id,
             })
+                .populate("author_id")
+                .populate("section_id")
                 .lean()
                 .exec();
 
