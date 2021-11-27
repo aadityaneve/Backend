@@ -177,6 +177,18 @@ app.get("/user/books", async (req, res) => {
     try {
         const books = await User.find({}, { book_id: 1 })
             .populate("book_id")
+            .populate({
+                path: "book_id",
+                populate: {
+                    path: "author_id",
+                },
+            })
+            .populate({
+                path: "book_id",
+                populate: {
+                    path: "section_id",
+                },
+            })
             .lean()
             .exec();
 
