@@ -132,7 +132,7 @@ app.get("/jobs/company-details=:companyId", async (req, res) => {
 
 app.get("/jobs/vacancy", async (req, res) => {
     try {
-        const jobs = await Job.find({}).sort({ vacancy: true });
+        const jobs = await Job.find({ vacancy: true });
         return res.status(201).send(jobs);
     } catch (e) {
         return res.status(500).send({ message: e.message });
