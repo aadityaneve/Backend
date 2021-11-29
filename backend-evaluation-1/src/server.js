@@ -148,7 +148,14 @@ app.get("/jobs/company-details=:companyId", async (req, res) => {
 
 app.get("/jobs/vacancy", async (req, res) => {
     try {
-        const jobs = await Job.find({ vacancy: true }).populate("company_id");
+        const jobs = await Job.find(
+            {
+                $and: [
+                    { vacancy: true },
+                    { company_name: "sharechat"}
+                ]
+            }
+        ).populate("company_id");
         return res.status(201).send(jobs);
     } catch (e) {
         return res.status(500).send({ message: e.message });
