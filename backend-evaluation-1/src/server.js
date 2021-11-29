@@ -85,7 +85,7 @@ app.post("/skill", async (req, res) => {
     }
 });
 
-app.get("/jobs/skill=:skill", async (req, res) => {
+app.get("/jobs/city=:city/skill=:skill", async (req, res) => {
     try {
         const jobs = await Skill.find({ skill: req.params.skill });
         return res.status(201).send(jobs);
@@ -96,7 +96,7 @@ app.get("/jobs/skill=:skill", async (req, res) => {
 
 app.get("/jobs/work-form-home", async (req, res) => {
     try {
-        const jobs = await Job.find({ work_from_home: true });
+        const jobs = await Job.find({ work_from_home: true }).populate("company_id");
         return res.status(201).send(jobs);
     } catch (e) {
         return res.status(500).send({ message: e.message });
@@ -105,7 +105,7 @@ app.get("/jobs/work-form-home", async (req, res) => {
 
 app.get("/jobs/notice-period", async (req, res) => {
     try {
-        const jobs = await Job.find({ notice_period: "2m" });
+        const jobs = await Job.find({ notice_period: "2m" }).populate("company_id");
         return res.status(201).send(jobs);
     } catch (e) {
         return res.status(500).send({ message: e.message });
@@ -114,7 +114,7 @@ app.get("/jobs/notice-period", async (req, res) => {
 
 app.get("/jobs/sort-by-rating", async (req, res) => {
     try {
-        const jobs = await Job.find({}).sort({ rating: -1 });
+        const jobs = await Job.find({}).sort({ rating: -1 }).populate("company_id");
         return res.status(201).send(jobs);
     } catch (e) {
         return res.status(500).send({ message: e.message });
@@ -132,7 +132,7 @@ app.get("/jobs/company-details=:companyId", async (req, res) => {
 
 app.get("/jobs/vacancy", async (req, res) => {
     try {
-        const jobs = await Job.find({ vacancy: true });
+        const jobs = await Job.find({ vacancy: true }).populate("company_id");
         return res.status(201).send(jobs);
     } catch (e) {
         return res.status(500).send({ message: e.message });
