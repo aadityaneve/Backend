@@ -87,7 +87,23 @@ app.post("/skill", async (req, res) => {
 
 app.get("/jobs/city=:city/skill=:skill", async (req, res) => {
     try {
-        const jobs = await Skill.find({ skill: req.params.skill });
+        // const jobs = await Skill.find({ skill: req.params.skill });
+        const jobs = await Skill.find(
+            {
+                $and: [
+                    { city_name: req.params.city},
+                    { skill: req.params.skill }
+                ],
+            }
+        ).populate("job_id")
+        .populate(
+            {
+            path: "job_id",
+            populate: {
+                path: "company_id",
+            }
+            }
+        )
         return res.status(201).send(jobs);
     } catch (e) {
         return res.status(500).send({ message: e.message });
