@@ -3,7 +3,30 @@ const express = require("express");
 app.use(express.json());
 
 const productController = require("./controllers/product.controller");
+const userController = require("./controllers/user.controller");
+const adminController = require("./controllers/admin.controller");
 
 app.use("/product", productController);
+app.use("/user", userController);
+app.use("/admin", adminController);
 
 start();
+
+/* 
+
+Create a users collection and it should have
+first_name
+last_name
+email
+create endpoint for registering where in the user can register and 
+when he registers we should send him a confirmation email and the contents of that will be
+to :- {user.email}
+subject :- Welcome to ABC system {user.first_name} {user.last_name}
+text :- Hi {first_name}, Please confirm your email address
+create a set of admins ( 5 admin users)
+when a user registers all the admins should receive an email stating
+subject :- {user.first_name} {user.last_name} has registered with us
+text :- Please welcome {user.first_name} {user.last_name}
+An endpoint to get the paginated users should be available
+
+*/
