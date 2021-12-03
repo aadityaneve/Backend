@@ -34,20 +34,38 @@ const register = async (req, res) => {
     }
 };
 
-const login = (req, res) => {
+const login = async (req, res) => {
     try {
-
         // check if the provided email address is already exist
+        let user = await User.findOne({ email: req.body.email });
 
         // if it does not exist then throw an error
+        if (!user) {
+            return res.status(400).json({
+                status: "Failed",
+                message: "This E-Mail Is Not Registered.",
+            });
+        }
 
         // else we match the password
+        const matchPassword = await user.checkPassword(req.body.password);
 
         // if not match then throw an error
+        if (!user) {
+            return res.status(400).json({
+                status: "Failed",
+                message: "E-Mail Address Or Password Incorrect.",
+            });
+        }
 
         // if it matches then create the token
-        
-        res.status(201).send("Logged In Successfully.");
+        const token = newToken(user);
+
+        res.status(201).json({
+            message: "Logged In Successfully.",
+            user,
+            token,
+        });
     } catch (e) {
         return res.status(500).json({ status: "Failed", message: e.message });
     }

@@ -23,6 +23,16 @@ userSchema.pre("save", function (next) {
     });
 });
 
+// checking for password
+userSchema.methods.checkPassword = function (password) {
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(password, this.password, function (err, same) {
+            if (err) return reject(err);
+            return resolve(same);
+        });
+    });
+};
+
 const User = model("user", userSchema);
 
 module.exports = User;
