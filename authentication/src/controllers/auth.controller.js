@@ -1,6 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
+const { validationResult } = require("express-validator");
 
 const newToken = (user) => {
     return jwt.sign({ user: user }, process.env.JWT_ACCESS_KEY);
@@ -8,6 +9,18 @@ const newToken = (user) => {
 
 const register = async (req, res) => {
     try {
+        /* Validations */
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            let newErrors = errors.array().map(({ msg, param, location }) => {
+                return {
+                    [param]: msg,
+                };
+            });
+            return res.status(400).send({ errors: newErrors });
+        }
+        /* Validations */
+
         // check if the email address provided already exists
         let user = await User.findOne({ email: req.body.email }).lean().exec();
 
