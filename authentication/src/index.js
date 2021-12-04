@@ -1,6 +1,7 @@
 const express = require("express");
 const { check, body, validationResult } = require("express-validator");
 const { register, login } = require("./controllers/auth.controller");
+const { postIt, getIt } = require("./controllers/post.controller");
 const { start, app } = require("./server");
 app.use(express.json());
 
@@ -28,5 +29,22 @@ app.post(
         .withMessage("Password Must Be 6 Characteres Long."),
     login
 );
+
+app.post(
+    "/post",
+
+    check("title")
+        .isLength({ min: 0, max: 100 })
+        .withMessage("Title Should Be Between 0 - 100 Characteres"),
+    check("body")
+        .isLength({ min: 0, max: 2000 })
+        .withMessage(
+            "Description / Body Shoul Be Between 0 - 2000 Characteres."
+        ),
+
+    postIt
+);
+
+app.get("/post", getIt);
 
 start();
