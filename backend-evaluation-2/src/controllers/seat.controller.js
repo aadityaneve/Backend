@@ -4,7 +4,7 @@ const Seat = require('../models/seat.model');
 
 router.post('/seat', async (req, res) => {
     try {
-        const seat = await Seat.create();
+        const seat = await Seat.create(req.body);
 
         return res.status(201).json({ status: 'Success', seat: seat });
     } catch (e) {
