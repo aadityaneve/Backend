@@ -35,7 +35,7 @@ export class OrganizationController {
     return this.organizationService.createOrganization(organizationDto);
   }
 
-  @Patch('/org/:id')
+  @Patch(':id')
   async updateOrganization(
     @Param() { id }: any,
     @Body() postDataDto: Organization,
@@ -43,7 +43,7 @@ export class OrganizationController {
     return this.organizationService.updateOrganization(id, postDataDto);
   }
 
-  @Delete('/org/:id')
+  @Delete(':id')
   async deleteOrganization(@Param() { id }: any) {
     return this.organizationService.deleteOrganization(id);
   }

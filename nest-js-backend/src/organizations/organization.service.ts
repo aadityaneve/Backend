@@ -31,8 +31,11 @@ export class OrganizationServices {
   }
 
   // Updating an Organization
-  async updateOrganization(id: string, postDataDto: Organization) {
-    const org = await this.organizationModel.updateOne(
+  async updateOrganization(
+    id: string,
+    postDataDto: Organization,
+  ): Promise<Organization> {
+    const org = await this.organizationModel.findOneAndUpdate(
       { _id: id },
       postDataDto,
       { new: true },
@@ -42,8 +45,8 @@ export class OrganizationServices {
   }
 
   // Deleting an Organization
-  async deleteOrganization(id: string) {
-    const deletedOrg = await this.organizationModel.deleteOne(
+  async deleteOrganization(id: string): Promise<Organization> {
+    const deletedOrg = await this.organizationModel.findOneAndDelete(
       { _id: id },
       { new: true },
     );

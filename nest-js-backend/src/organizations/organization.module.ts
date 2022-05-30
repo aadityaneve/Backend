@@ -18,16 +18,16 @@ import { OrganizationSchema } from './organization.model';
 @Module({
   imports: [
     // Connection to mongodb
-    MongooseModule.forRoot(
-      'mongodb+srv://aadityaneve:aadityaneve12$@cluster0.aiizm.mongodb.net/nest_test',
-    ),
+    // MongooseModule.forRoot(
+    //   'mongodb+srv://aadityaneve:aadityaneve12$@cluster0.aiizm.mongodb.net/nest_test',
+    // ),
     // Importing Organization Schema
     MongooseModule.forFeature([
       { name: 'organization', schema: OrganizationSchema },
     ]),
   ],
-  controllers: [AppController, OrganizationController],
-  providers: [AppService, OrganizationServices],
+  controllers: [OrganizationController],
+  providers: [OrganizationServices],
   exports: [OrganizationServices],
 })
 export class OrganizationModule {}
