@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AppController, OrganizationController } from './app.controller';
-import { AppService, OrganizationServices } from './app.service';
+import {
+  AppController,
+  OrganizationController,
+} from './organization.controller';
+import { AppService, OrganizationServices } from './organization.service';
 
 import { MongooseModule } from '@nestjs/mongoose';
-import { OrganizationSchema } from './organization.model.ts';
+import { OrganizationSchema } from './organization.model';
 
 @Module({
   imports: [
@@ -19,4 +22,4 @@ import { OrganizationSchema } from './organization.model.ts';
   controllers: [AppController, OrganizationController],
   providers: [AppService, OrganizationServices],
 })
-export class AppModule {}
+export class OrganizationModule {}
