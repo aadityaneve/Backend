@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { Module, ValidationError } from '@nestjs/common';
+import { ValidatorOptions } from 'class-validator';
 import {
   AppController,
   OrganizationController,
@@ -7,6 +8,12 @@ import { AppService, OrganizationServices } from './organization.service';
 
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizationSchema } from './organization.model';
+
+// export interface ValidationPipeOptions extends ValidatorOptions {
+//   transform?: boolean;
+//   disableErrorMessages?: boolean;
+//   exceptionFactory?: (errors: ValidationError[]) => any;
+// }
 
 @Module({
   imports: [
@@ -21,5 +28,6 @@ import { OrganizationSchema } from './organization.model';
   ],
   controllers: [AppController, OrganizationController],
   providers: [AppService, OrganizationServices],
+  exports: [OrganizationServices],
 })
 export class OrganizationModule {}

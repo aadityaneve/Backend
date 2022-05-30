@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { AppService, OrganizationServices } from './organization.service';
 import { Organization } from './organization.model';
+import { OrganizationDto } from './organization.dto';
 
 @Controller()
 export class AppController {
@@ -20,17 +21,17 @@ export class AppController {
   }
 }
 
-@Controller()
+@Controller('org')
 export class OrganizationController {
   constructor(private readonly organizationService: OrganizationServices) {}
 
-  @Get('/org')
+  @Get()
   async getAllOrganizations() {
     return this.organizationService.getAllOrganizations();
   }
 
-  @Post('/org')
-  async createOrganization(@Body() organizationDto: Organization) {
+  @Post()
+  async createOrganization(@Body() organizationDto: OrganizationDto) {
     return this.organizationService.createOrganization(organizationDto);
   }
 

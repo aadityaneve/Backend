@@ -25,7 +25,7 @@ export class OrganizationServices {
   }
 
   // Creating an Organization
-  async createOrganization(organization: Organization): Promise<Organization> {
+  async createOrganization(organization: any): Promise<Organization> {
     const newOrganization = new this.organizationModel(organization);
     return newOrganization.save();
   }
