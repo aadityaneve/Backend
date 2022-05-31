@@ -3,14 +3,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizationModule } from './organizations';
-
+import { PatientModule } from './patient';
+import keys from './configs/keys';
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb+srv://aadityaneve:aadityaneve12$@cluster0.aiizm.mongodb.net/nest_test',
-      { useNewUrlParser: true },
-    ),
+    MongooseModule.forRoot(keys.mongoURI, { useNewUrlParser: true }),
     OrganizationModule,
+    PatientModule,
   ],
   controllers: [AppController],
   providers: [AppService],
